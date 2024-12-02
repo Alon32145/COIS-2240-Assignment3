@@ -1,4 +1,11 @@
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.BufferedReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import java.util.Date;
 
 public class Transaction {
@@ -16,13 +23,36 @@ public class Transaction {
         }
         return instance;
     }
+    
+    public void  saveTransaction(String str) {
+    	try (BufferedWriter writer = new BufferedWriter(new FileWriter("transactions.txt", true))) {
+            writer.write(str);
+            writer.newLine();  // Ensure each transaction is on a new line
+        } catch (IOException e) {
+            System.out.println("An error occurred while saving the transaction: " + e.getMessage());
+        }
+    }
+    
+    public void  displayTransactionHistory() {
+    	System.out.println("---- Transaction History ----");
+        try (BufferedReader reader = new BufferedReader(new FileReader("transactions.txt"))) {
+            String transaction;
+            while ((transaction = reader.readLine()) != null) {
+                System.out.println(transaction);
+            }
+        } catch (IOException e) {
+            System.out.println("An error occurred while reading the transaction history: " + e.getMessage());
+        }
+    }
 
     // Perform the borrowing of a book
     public boolean borrowBook(Book book, Member member) {
         if (book.isAvailable()) {
+        	
             book.borrowBook();
             member.borrowBook(book); 
             String transactionDetails = getCurrentDateTime() + " - Borrowing: " + member.getName() + " borrowed " + book.getTitle();
+            saveTransaction(transactionDetails);
             System.out.println(transactionDetails);
             return true;
         } else {
@@ -37,6 +67,7 @@ public class Transaction {
             member.returnBook(book);
             book.returnBook();
             String transactionDetails = getCurrentDateTime() + " - Returning: " + member.getName() + " returned " + book.getTitle();
+            saveTransaction(transactionDetails);
             System.out.println(transactionDetails);
         } else {
             System.out.println("This book was not borrowed by the member.");

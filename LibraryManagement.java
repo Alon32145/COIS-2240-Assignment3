@@ -37,8 +37,12 @@ public class LibraryManagement {
                     scanner.nextLine();
 
                     Member newMember = new Member(id, name);
-                    library.addMember(newMember);
-                    System.out.println("Member added successfully.");
+                    if(library.addMember(newMember)) { // since addmember is now a bool it will send a message depending on the condition.
+                    	System.out.println("Member added successfully.");
+                    }else {
+                    	System.out.print("This ID already exists.\n"
+        					    + "Please try again with a new ID. \n");
+                    }
                     break;
                 case 2:
                     System.out.print("Enter book ID: ");
@@ -49,8 +53,12 @@ public class LibraryManagement {
                     scanner.nextLine();
 
                     Book newBook = new Book(id, title);
-                    library.addBook(newBook);
-                    System.out.println("Book added to library successfully.");
+                    if(library.addBook(newBook)) { // since addBook is now a bool it will send a message depending on the condition.
+                    	System.out.println("Book added to library successfully.");
+                    }else {
+                    	System.out.print("This book ID already exists.\n"
+        					    + "Please try again with a new book ID. \n");
+                    }
                     break;
                 case 3:
                 	System.out.println("\n--- Available Members ---");
@@ -118,7 +126,7 @@ public class LibraryManagement {
                     }
                     break;
                 case 6:
-                	Transaction.displayTransactionHistory();
+                	Transaction.getTransaction().displayTransactionHistory();
                     break;
                 case 7:
                     System.out.println("Exiting. Good Bye..");

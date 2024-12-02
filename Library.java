@@ -6,13 +6,26 @@ public class Library {
     private List<Book> books = new ArrayList<Book>();
 
     // Add a new member to the library
-    public void addMember(Member member) {
-        members.add(member);
+    public boolean addMember(Member member) {
+    	if(findMemberById(member.getId()) == null ) { // if ID is unique a new member will form.
+    		members.add(member);
+    		return true;
+    	}
+    	else { // otherwise an error will show
+    		return false;
+    	}
     }
     
     // Add a new book to the library
-    public void addBook(Book book) {
-        books.add(book);
+    public boolean addBook(Book book) {
+    	if(findBookById(book.getId()) == null ) { // if ID is unique a new book will form.
+    		books.add(book);
+    		return true;
+    	}
+    	else { // otherwise an error will show
+    		return false;
+    	}
+        
     }
 
     // Find a member by ID
