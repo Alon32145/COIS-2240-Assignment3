@@ -76,7 +76,8 @@ public class LibraryManagement {
                     Book book = library.findBookById(bookId);
 
                     if (member != null && book != null) {
-                    	Transaction.borrowBook(book, member);
+                    	// Use the Singleton instance of Transaction
+                        Transaction.getTransaction().borrowBook(book, member);
                     } else {
                         System.out.println("Invalid member or book ID.");
                     }
@@ -94,7 +95,8 @@ public class LibraryManagement {
                     book = library.findBookById(bookId);
 
                     if (member != null && book != null) {
-                    	Transaction.returnBook(book, member);
+                    	// Use the Singleton instance of Transaction
+                        Transaction.getTransaction().returnBook(book, member);
                     } else {
                         System.out.println("Invalid member or book ID.");
                     }
