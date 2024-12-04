@@ -3,11 +3,11 @@ import java.util.Scanner;
 public class LibraryManagement {
     private Library library = new Library();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         new LibraryManagement().run();
     }
 
-    private void run() {
+    private void run() throws Exception {
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
 
@@ -51,14 +51,20 @@ public class LibraryManagement {
                     String title = scanner.next();
                     
                     scanner.nextLine();
-
-                    Book newBook = new Book(id, title);
-                    if(library.addBook(newBook)) { // since addBook is now a bool it will send a message depending on the condition.
-                    	System.out.println("Book added to library successfully.");
-                    }else {
-                    	System.out.print("This book ID already exists.\n"
-        					    + "Please try again with a new book ID. \n");
+                    try {
+                    	
+                    	Book newBook = new Book(id, title);
+                        if(library.addBook(newBook)) { // since addBook is now a bool it will send a message depending on the condition.
+                        	System.out.println("Book added to library successfully.");
+                        }else {
+                        	System.out.print("This book ID already exists.\n"
+            					    + "Please try again with a new book ID. \n");
+                        }
+                    	
+                    } catch (Exception e){
+                    	System.out.println("Invalid book ID provided. Please enter a valid ID between 100 and 999.");
                     }
+                    
                     break;
                 case 3:
                 	System.out.println("\n--- Available Members ---");
